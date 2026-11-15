@@ -1,0 +1,24 @@
+- user1 создает файл
+from user1
+from user2
+from user3
+- curator1 читает файл
+from user1
+from user2
+from user3
+- curator1 пытается писать в файл
+-bash: строка 1: /data/mephi-2026/testik-user1.txt: Отказано в доступе
+- права на файл
+getfacl: Removing leading '/' from absolute path names
+# file: data/mephi-2026/testik-user1.txt
+# owner: user1
+# group: user1
+user::rw-
+user:user1:rwx	#effective:rw-
+user:user2:rwx	#effective:rw-
+user:user3:rwx	#effective:rw-
+group::r-x	#effective:r--
+group:curators:r-x	#effective:r--
+mask::rw-
+other::---
+

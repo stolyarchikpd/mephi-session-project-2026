@@ -1,0 +1,6 @@
+tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+listening on enp0s3, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+00:20:54.663165 IP _gateway.55947 > mephi-2026.domain.local.ssh: Flags [P.], seq 150206523:150206559, ack 2235894423, win 65535, length 36
+1 packet captured
+98 packets received by filter
+0 packets dropped by kernel

@@ -1,0 +1,6 @@
+selinux status
+Enforcing
+selinux context na mephi-web
+system_u:object_r:httpd_sys_content_t:s0 lost+found
+nginx otdaet fail iz mephi-web
+test

@@ -1,0 +1,167 @@
+    1  ls
+    2  cat ping.out
+    3  dnf install -y nginx libcap-ng-utils
+    4  dnf install -y dnf-utils
+    5  dnf download tcpdump --destdir=/tmp
+    6  cd /tmp
+    7  ls -la
+    8  cd 
+    9  ls
+   10  rpm -ivh /tmp/tcpdump-4.99.5-1.red80.x86_64.rpm
+   11  rpm -q tcpdump
+   12  which tcpdump
+   13  rm -f /tmp/tcpdump-4.99.5-1.red80.i686.rpm
+   14  dnf history > dnf.out
+   15  ls
+   16  cat dnf.out
+   17  lsblk
+   18  fdisk /dev/sdb
+   19  lsblk
+   20  mkfs.ext4 -L MEPHI_WEB /dev/sdb1
+   21  blkid /dev/sdb1
+   22  mkdir /mephi-web
+   23  echo "LABEL=MEPHI_WEB /mephi-web ext4 defaults 0 0" >> /etc/fstab
+   24  cat /etc/fstab
+   25  mount /mephi-web
+   26  systemctl daemon-reload
+   27  mount | grep mephi-web
+   28  cd mephi-web
+   29  cd /mephi-web
+   30  df -h
+   31  cd
+   32  lsblk
+   33  pwd
+   34  systemctl start nginx
+   35  systemctl enable nginx
+   36  systemctl status nginx
+   37  journalctl -u nginx -b > journalctl.out
+   38  ls
+   39  cat journalctl.out
+   40  useradd -u 5501 user1
+   41  useradd -u 5502 user2
+   42  useradd -u 5503 user3
+   43  groupadd -g 4444 curators
+   44  useradd -G curators curator1
+   45  useradd -G curators curator2
+   46  passwd user1
+   47  passwd user2
+   48  passwd user3
+   49  passwd curator1
+   50  passwd curator2
+   51  id user1 user2 user3 curator1 curator2
+   52  mkdir -p /data/mephi-2026
+   53  which setfacl getfacl || dnf install -y acl
+   54  chmod 750 /data/mephi-2026
+   55  chown root:curators /data/mephi-2026
+   56  setfacl -m u:user1:rwx,u:user2:rwx,u:user3:rwx,g:curators:rx,o::--- /data/mephi-2026
+   57  setfacl -d -m u:user1:rwx,u:user2:rwx,u:user3:rwx,g:curators:rx,o::--- /data/mephi-2026
+   58  getfacl /data/mephi-2026
+   59  su - user1 -c 'touch /data/mephi-2026/testik-user1.txt'
+   60  su - user1 -c 'echo "from user1" >> /data/mephi-2026/testik-user1.txt'
+   61  su - user3 -c 'cat /data/mephi-2026/testik-user1.txt'
+   62  su - user2 -c 'cat /data/mephi-2026/testik-user1.txt'
+   63  su - user2 -c 'echo "from user2" >> /data/mephi-2026/testik-user1.txt'
+   64  su - user3 -c 'echo "from user3" >> /data/mephi-2026/testik-user1.txt'
+   65  su - user3 -c 'cat /data/mephi-2026/testik-user1.txt'
+   66  cat /data/mephi-2026/testik-user1.txt
+   67  su - curator1 -c 'cat /data/mephi-2026/testik-user1.txt'
+   68  su - curator1 -c 'echo "test ne dolznho proyti" >> data/mephi-2026/testik-user1.txt'
+   69  su - curator1 -c 'echo "test ne dolznho proyti" >> /data/mephi-2026/testik-user1.txt'
+   70  getfacl /data/mephi-2026/testik-user1.txt
+   71  { echo "- user1 создает файл"; su - user1 -c 'cat /data/mephi-2026/testik-user1.txt'; echo "- curator1 читает файл"; su - curator1 -c 'cat /data/mephi-2026/testik-user1.txt'; echo "- curator1 пытается писать в файл"; su - curator1 -c 'echo "test ne dolzhno proyti" >> /data/mephi-2026/testik-user1.txt'; echo "- права на файл"; getfacl /data/mephi-2026/testik-user1.txt; }
+   72  {  echo "- user1 создает файл" su - user1 -c 'cat /data/mephi-2026/testik-user1.txt' echo "- curator1 читает файл" su - curator1 -c 'cat /data/mephi-2026/testik-user1.txt' echo "- curator1 пытается писать в файл" su - curator1 -c 'echo "test ne dolzhno proyti" >> /data/mephi-2026/testik-user1.txt' echo "- права на файл" getfacl /data/mephi-2026/testik-user1.txt } > dac_proof.out ; }
+   73  ls
+   74  cat dac_proof.out
+   75  rm  dac_proof.out
+   76  ls
+   77  history
+   78  { echo "- user1 создает файл"; su - user1 -c 'cat /data/mephi-2026/testik-user1.txt'; echo "- curator1 читает файл"; su - curator1 -c 'cat /data/mephi-2026/testik-user1.txt'; echo "- curator1 пытается писать в файл"; su - curator1 -c 'echo "test ne dolzhno proyti" >> /data/mephi-2026/testik-user1.txt'; echo "- права на файл"; getfacl /data/mephi-2026/testik-user1.txt; } > ~/dac_proof.out 2>&1
+   79  cat dac_proof.out
+   80  ls -l /usr/sbin/tcpdump
+   81  getcap /usr/sbin/tcpdump
+   82  setcap cap_net_raw,cap_net_admin=eip /usr/sbin/tcpdump
+   83  getcap /usr/sbin/tcpdump
+   84  sudo -u user1 tcpdump -c 1
+   85  getcap /usr/sbin/tcpdump > getcap.out
+   86  cat getcap.out
+   87  sudo -u user1 tcpdump -c 1 > tcpdump_proof.out 2>&1
+   88  cat tcpdump_proof.out
+   89  getenfroce
+   90  getenforce
+   91  sestatus
+   92  getenforce > getenforce.out
+   93  cat getenforce.out
+   94  ls -Z /mephi-web
+   95  ls -Z /usr/share/nginx/html 2>/dev/null || ls -Z /var/www/html 2>/dev/null
+   96  which semanage
+   97  dnf install -y policycoreutils-python-utils
+   98  semanage fcontext -a -t httpd_sys_content_t "/mephi-web(/.*)?"
+   99  restorecon -Rv /mephi-web
+  100  ls -Z /mephi-web
+  101  cat /etc/nginx/nginx.conf
+  102  nano /etc/nginx/nginx.conf
+  103  cat /etc/nginx/nginx.conf
+  104  nginx -t
+  105  systemctl restart nginx
+  106  systemctl status nginx
+  107  echo "test selinu and nginx" > /mephi-web/test.html
+  108  curl http://localhost/test.html
+  109  rm -f /mephi-web/test.html
+  110  { echo "selinux status"; getenforce; echo "selinux context na mephi-web"; ls -Z /mephi-web; echo "nginx otdaet fail iz mephi-web"; echo "test" > /mephi-web/selinux_test.html; curl http://localhost/selinux_test.html; rm -f /mephi-web/selinux_test.html; } > selinux_context.out
+  111  cat selinux_context.out
+  112  getenforce > getenforce.out
+  113  cat getenforce.out
+  114  usermod -s /sbin/nologin curator1
+  115  usermod -s /sbin/nologin curator2
+  116  cat /etc/passwd
+  117  cat /etc/security/pwquality.conf
+  118  echo "minlen = 12" >> /etc/security/pwquality.conf
+  119  cat /etc/security/pwquality.conf
+  120  su - user1 -c 'test'
+  121  su - user1 -c 'passwd'
+  122  su - user1 -c 'passwd' > password-test.out 
+  123  cat passwodr-test.out
+  124  cat password-test.out
+  125  ls
+  126  cat  password-test.out
+  127  cat password-test.out
+  128  rm password-test.out 
+  129  su - user1 -c 'passwd' > password-test.out 2>&1
+  130  ls
+  131  rm password-test.out 
+  132  su - user1 -c 'passwd' > password-test.out 2>&1
+  133  123
+  134  cat password-test.out
+  135  rm password-test.out 
+  136  script -c "su - user1 -c passwd" password-test.out
+  137  cat password-test.out 
+  138  passwd user1
+  139  passwd user2
+  140  passwd user3
+  141  passwd curator1
+  142  passwd curator2
+  143  chage -M 90 user1
+  144  chage -M 90 user2
+  145  chage -M 90 user3
+  146  chage -M 90 curator1
+  147  chage -M 90 curator2
+  148  chage -l user1
+  149  echo "Hello from Student: 374306" > /mephi-web/index.html
+  150  cat /mephi-web/index.html
+  151  curl http://localhost/ > curl.out
+  152  cat curl.out
+  153  ls -la 
+  154  stat /data/mephi-2026 > stat.out
+  155  stat /mephi-web >> stat.out
+  156  getfacl /data/mephi-2026 > getfacl.out
+  157  cat getfacl.out
+  158  cat stat.out
+  159  grep user1 /etc/passwd /etc/shadow /etc/group
+  160  grep curator /etc/group
+  161  tail -5 /etc/fstab
+  162  history > history.out
+  163  cat history.ouy
+  164  cat history.our
+  165  cat history.out
+  166  curl http://localhost/
+  167  history > history.out
