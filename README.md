@@ -1,0 +1,32 @@
+# MEPHI Session Project 2026
+
+Сессионное задание
+
+## Файлы
+
+| Файл | Что показывает |
+|---|---|
+| mephi-screenshot.png | Скриншот терминала с результатом curl и текстом "Hello from Student: 374306" |
+| history.out | Полная история выполненных команд |
+| ping.out | Проверка связи с 8.8.8.8 |
+| dnf.out | История транзакций dnf (обновление, установка nginx и libcap-ng-utils) |
+| stat.out | Права и SELinux-контекст директорий /data/mephi-2026 и /mephi-web |
+| journalctl.out | Журнал запуска nginx для текущей загрузки |
+| getcap.out | Привилегии (capabilities), установленные на /usr/sbin/tcpdump |
+| getenforce.out | Текущий режим SELinux |
+| curl.out | Ответ веб-сервера на http://localhost/ |
+| fstab | Настройка автомонтирования раздела /mephi-web по метке тома |
+| passwd | Список пользователей системы |
+| shadow | Параметры паролей пользователей (срок действия и т.д.) |
+| group | Список групп, включая curators |
+| pwquality.conf | Настройка минимальной длины пароля (12 символов) |
+
+## Дополнительные файлы (не обязательны по заданию, добавлены как доказательство)
+
+| Файл | Что подтверждает |
+|---|---|
+| dac_proof.out | user1, user2 и user3 читают и дописывают один файл в /data/mephi-2026; curator1 читает файл, но получает отказ при попытке записи |
+| getfacl.out | Подробные ACL-права на директорию /data/mephi-2026 |
+| tcpdump_proof.out | Обычный пользователь user1 успешно запускает tcpdump без прав root |
+| selinux_context.out | nginx отдаёт файл именно из /mephi-web, директория имеет корректный SELinux-контекст httpd_sys_content_t |
+| password-test.out | Система отклоняет пароль короче 12 символов |
